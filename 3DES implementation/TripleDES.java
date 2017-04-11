@@ -22,15 +22,15 @@ public class TripleDES {
     SecretKey key;
 
     public TripleDES() throws Exception {
-        myEncryptionKey = "ThisIsSpartaThisIsSparta";
+        myEncryptionKey = "ThisisSpartaThisisSparta";
         myEncryptionScheme = DESEDE_ENCRYPTION_SCHEME;
         arrayBytes = myEncryptionKey.getBytes(UNICODE_FORMAT);
         ks = new DESedeKeySpec(arrayBytes);
         skf = SecretKeyFactory.getInstance(myEncryptionScheme);
         cipher = Cipher.getInstance(myEncryptionScheme);
         key = skf.generateSecret(ks);
-    }
 
+    }
 
     public String encrypt(String unencryptedString) {
         String encryptedString = null;
@@ -62,16 +62,22 @@ public class TripleDES {
 
     public static void main(String args []) throws Exception
     {
-        TripleDES td= new TripleDES();
+        TripleDES td = new TripleDES();
 
-        String target="imparator";
+        //String stringKey = Base64.encodeToString(key.getEncoded(), Base64.DEFAULT);
+
+        String target="More random text";
         String encrypted=td.encrypt(target);
         String decrypted=td.decrypt(encrypted);
+        
+        //Might have to convert to byte[] to return key back from string
+        //toString does not output the right key...
+        //String key = td.key.toString();
 
-        //System.out.println("Key" + key.toString());
+        //System.out.println("Key" + key);
         System.out.println("String To Encrypt: "+ target);
-        System.out.println("Encrypted String:" + encrypted);
-        System.out.println("Decrypted String:" + decrypted);
+        System.out.println("Encrypted String: " + encrypted);
+        System.out.println("Decrypted String: " + decrypted);
 
     }
 
