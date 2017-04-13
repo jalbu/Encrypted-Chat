@@ -1,11 +1,21 @@
 # Encrypted-Chat
 
 import java.security.MessageDigest;
+//NEWCODE. Added function bytesToHex. It converts the bytes to a hex string
 
-
-This is what I added under private void msg_connActionPerfommed
-
-private void msg_connActionPerformed(java.awt.event.ActionEvent evt) {                                         
+private static String bytesToHex(byte[] bytes) {
+        StringBuffer result = new StringBuffer();
+        for (byte b : bytes)
+            result.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+            return result.toString();
+    }
+    
+    
+    
+    
+    //actions that occur when connect button is pressed 
+    private void msg_connActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        
         //while not connected to the socket
         if(connected == false)
         {
@@ -13,15 +23,16 @@ private void msg_connActionPerformed(java.awt.event.ActionEvent evt) {
             user = msg_user.getText();
             msg_user.setEditable(false);
            
-            password = msg_pass.getText();
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(password.getBytes());
+            password = msg_pass.getText(); 
             
-            //converts byte to hex format
-            StringBuffer hexString = new StringBuffer();
-            for(int i = 0; i < byteData.length; i++)
-            {  String hex = Integer.toHexString(0xff & byteData[i]);
-               if(hex.length() == 1) hexString.append('0');
-               hexString.append(hex);
+            try {
+                //FIXME
+                //creates message digest
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+                md.update(password.getBytes());
+                //uses message digest as key for encryption
+                 td.TripleDes(bytesToHex(md.digest()));
+            } catch (Exception ex) {
+                Logger.getLogger(client.class.getName()).log(Level.SEVERE, null, ex);
             }
-            }
+            
