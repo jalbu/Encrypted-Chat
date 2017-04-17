@@ -1,5 +1,20 @@
-To compile Triple DES (Must have commons-codec-1.10.jar in current directory)
-	javac -cp ".;commons-codec-1.10.jar" TripleDES.java
+Project Created by:
+	James Albu
+	Devika Maharaj
+	Rebecca Johnson
+
+NOTE: Must have commons-codec-1.10.jar in current directory
+To compile Client (It should already be compiled)
+	javac -cp *; TripleDES.java client.java
+	
+To compile Server (It should already be compiled)
+	javac -cp *; TripleDES.java Server.java
 
 To run
-	java -cp ".;commons-codec-1.10.jar" TripleDES
+	To manually run from command line:
+		For server
+			java -cp *; server 
+		For client
+			java -cp *; client
+
+	Could also run by clicking server.vbs or client.vbs

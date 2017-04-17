@@ -1,10 +1,13 @@
-/*
-	
-*/
+/**
+ *
+ * @author James
+ */
+
 import java.security.spec.KeySpec;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.DESedeKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
@@ -12,7 +15,7 @@ import org.apache.commons.codec.binary.Base64;
 public class TripleDES {
 
     private static final String UNICODE_FORMAT = "UTF8";
-    public static final String DESEDE_ENCRYPTION_SCHEME = "DESede";
+    public static final String DES_ENCRYPTION_SCHEME = "DES";
     private KeySpec ks;
     private SecretKeyFactory skf;
     private Cipher cipher;
@@ -22,14 +25,27 @@ public class TripleDES {
     SecretKey key;
 
     public TripleDES() throws Exception {
+        
         myEncryptionKey = "ThisisSpartaThisisSparta";
-        myEncryptionScheme = DESEDE_ENCRYPTION_SCHEME;
+        myEncryptionScheme = DES_ENCRYPTION_SCHEME;
         arrayBytes = myEncryptionKey.getBytes(UNICODE_FORMAT);
-        ks = new DESedeKeySpec(arrayBytes);
+        ks = new DESKeySpec(arrayBytes);
         skf = SecretKeyFactory.getInstance(myEncryptionScheme);
         cipher = Cipher.getInstance(myEncryptionScheme);
         key = skf.generateSecret(ks);
-
+        
+        
+    }
+    public void TripleDes(String nKey) throws Exception {
+        //Make sure that key is 24 bytes long, might have to fill in the rest with
+        //blank characters
+        myEncryptionKey = nKey;
+        myEncryptionScheme = DES_ENCRYPTION_SCHEME;
+        arrayBytes = myEncryptionKey.getBytes(UNICODE_FORMAT);
+        ks = new DESKeySpec(arrayBytes);
+        skf = SecretKeyFactory.getInstance(myEncryptionScheme);
+        cipher = Cipher.getInstance(myEncryptionScheme);
+        key = skf.generateSecret(ks);
     }
 
     public String encrypt(String unencryptedString) {
@@ -59,7 +75,7 @@ public class TripleDES {
         return decryptedText;
     }
 
-
+/*
     public static void main(String args []) throws Exception
     {
         TripleDES td = new TripleDES();
@@ -80,5 +96,5 @@ public class TripleDES {
         System.out.println("Decrypted String: " + decrypted);
 
     }
-
+*/
 }
